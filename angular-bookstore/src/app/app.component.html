@@ -1,0 +1,16 @@
+<h1>Book Store</h1>
+
+<table border="1">
+  <thead>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Price</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let book of books">
+      <td>{{book.name}}</td>
+      <td>{{book.description}}</td>
+      <td>{{book.unitPrice | currency: 'INR'}}</td>
+    </tr>
+  </tbody>
+</table>
