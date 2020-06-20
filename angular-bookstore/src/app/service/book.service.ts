@@ -1,18 +1,26 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Book } from '../common/book';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BookService {
-  private baseUrl = 'http://localhost:8080/all';
+  private baseUrl = 'http://localhost:8080/api/v1/books';
+  private categoryUrl = 'http://localhost:8080/api/v1/book-category';
   constructor(private httpClient: HttpClient) {}
 
-  getBooks() {
-    return this.httpClient.get(this.baseUrl).subscribe((response) => {
-      console.log(response);
-    });
+  getBooks(): Observable<Book[]> {
+    return this.httpClient
+      .get<GetResponseBooks>(this.baseUrl)
+      .pipe(map((response) => response._embedded.books));
   }
+}
+
+interface GetResponseBooks {
+  _embedded: {
+    books: Book[];
+  };
 }
